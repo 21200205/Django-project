@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate APS and Get Course Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+        .container {
+            width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-field {
+            margin-bottom: 15px;
+        }
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .submit-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculate Your Admission Points Score</h1>
+        <form id="aps-form" method="POST" action="{% url 'calculate_aps' %}">
+            {% csrf_token %}
+            <!-- Math Subject and Marks -->
+            <div class="form-field">
+                <label>Choose your Math subject</label>
+                <input type="radio" name="math_subject" value="Mathematics" required> Mathematics
+                <input type="radio" name="math_subject" value="Maths Literacy"> Maths Literacy
+            </div>
+            <div class="form-field">
+                <label for="math_marks">Math Marks</label>
+                <select id="math_marks" name="math_marks" required>
+                    <option value="">Select Marks Range</option>
+                    <option value="90">90-100%</option>
+                    <option value="80">80-89%</option>
+                    <option value="70">70-79%</option>
+                    <option value="60">60-69%</option>
+                    <option value="50">50-59%</option>
+                    <option value="40">40-49%</option>
+                    <option value="30">30-39%</option>
+                    <option value="20">0-29%</option>
+                </select>
+            </div>
+ 
+            <!-- English Subject and Marks -->
+            <div class="form-field">
+                <label>Choose your English subject</label>
+                <input type="radio" name="english_subject" value="English HL" required> English Home Language
+                <input type="radio" name="english_subject" value="English FAL"> English First Additional Language
+                <input type="radio" name="english_subject" value="English 3rd"> English Third Language
+            </div>
+            <div class="form-field">
+                <label for="english_marks">English Marks</label>
+                <select id="english_marks" name="english_marks" required>
+                    <option value="">Select Marks Range</option>
+                    <option value="90">90-100%</option>
+                    <option value="80">80-89%</option>
+                    <option value="70">70-79%</option>
+                    <option value="60">60-69%</option>
+                    <option value="50">50-59%</option>
+                    <option value="40">40-49%</option>
+                    <option value="30">30-39%</option>
+                    <option value="20">0-29%</option>
+                </select>
+            </div>
+ 
+            <!-- Other Subjects (5 Subjects) -->
+            <h3>Other Subjects</h3>
+            <div class="form-field">
+                <label for="subject_1_name">Subject 1 Name</label>
+                <input type="text" id="subject_1_name" name="subject_1_name" required>
+            </div>
+            <div class="form-field">
+                <label for="subject_1_marks">Subject 1 Marks</label>
+                <select id="subject_1_marks" name="subject_1_marks" required>
+                    <option value="">Select Marks Range</option>
+                    <option value="90">90-100%</option>
+                    <option value="80">80-89%</option>
+                    <option value="70">70-79%</option>
+                    <option value="60">60-69%</option>
+                    <option value="50">50-59%</option>
+                    <option value="40">40-49%</option>
+                    <option value="30">30-39%</option>
+                    <option value="20">0-29%</option>
+                </select>
+            </div>
+
+            <!-- Repeat similar structure for other subjects -->
+            <!-- Subject 2 -->
+            <div class="form-field">
+                <label for="subject_2_name">Subject 2 Name</label>
+                <input type="text" id="subject_2_name" name="subject_2_name" required>
+            </div>
+            <div class="form-field">
+                <label for="subject_2_marks">Subject 2 Marks</label>
+                <select id="subject_2_marks" name="subject_2_marks" required>
+                    <option value="">Select Marks Range</option>
+                    <option value="90">90-100%</option>
+                    <option value="80">80-89%</option>
+                    <option value="70">70-79%</option>
+                    <option value="60">60-69%</option>
+                    <option value="50">50-59%</option>
+                    <option value="40">40-49%</option>
+                    <option value="30">30-39%</option>
+                    <option value="20">0-29%</option>
+                </select>
+            </div>
+
+            <!-- Subject 3 -->
+            <div class="form-field">
+                <label for="subject_3_name">Subject 3 Name</label>
+                <input type="text" id="subject_3_name" name="subject_3_name" required>
+            </div>
+            <div class="form-field">
+                <label for="subject_3_marks">Subject 3 Marks</label>
+                <select id="subject_3_marks" name="subject_3_marks" required>
+                    <option value="">Select Marks Range</option>
+                    <option value="90">90-100%</option>
+                    <option value="80">80-89%</option>
+                    <option value="70">70-79%</option>
+                    <option value="60">60-69%</option>
+                    <option value="50">50-59%</option>
+                    <option value="40">40-49%</option>
+                    <option value="30">30-39%</option>
+                    <option value="20">0-29%</option>
+                </select>
+            </div>
+
+            <!-- Subject 4 -->
+            <div class="form-field">
+                <label for="subject_4_name">Subject 4 Name</label>
+                <input type="text" id="subject_4_name" name="subject_4_name" required>
+            </div>
+            <div class="form-field">
+                <label for="subject_4_marks">Subject 4 Marks</label>
+                <select id="subject_4_marks" name="subject_4_marks" required>
+                    <option value="">Select Marks Range</option>
+                    <option value="90">90-100%</option>
+                    <option value="80">80-89%</option>
+                    <option value="70">70-79%</option>
+                    <option value="60">60-69%</option>
+                    <option value="50">50-59%</option>
+                    <option value="40">40-49%</option>
+                    <option value="30">30-39%</option>
+                    <option value="20">0-29%</option>
+                </select>
+            </div>
+
+            <!-- Subject 5 -->
+            <div class="form-field">
+                <label for="subject_5_name">Subject 5 Name</label>
+                <input type="text" id="subject_5_name" name="subject_5_name" required>
+            </div>
+            <div class="form-field">
+                <label for="subject_5_marks">Subject 5 Marks</label>
+                <select id="subject_5_marks" name="subject_5_marks" required>
+                    <option value="">Select Marks Range</option>
+                    <option value="90">90-100%</option>
+                    <option value="80">80-89%</option>
+                    <option value="70">70-79%</option>
+                    <option value="60">60-69%</option>
+                    <option value="50">50-59%</option>
+                    <option value="40">40-49%</option>
+                    <option value="30">30-39%</option>
+                    <option value="20">0-29%</option>
+                </select>
+            </div>
+
+            <button type="button" class="submit-button" onclick="calculateAPS()">Calculate APS</button>
+            <button type="submit" class="submit-button">Get Course Recommendations</button>
+        </form>
+ 
+        <div id="aps-result" class="result"></div>
+        <div id="error" class="error"></div>
+    </div>
+ 
+    <script>
+        function calculateAPS() {
+            const apsResultDiv = document.getElementById('aps-result');
+            const errorDiv = document.getElementById('error');
+           
+            // Clear previous results
+            apsResultDiv.innerHTML = '';
+            errorDiv.innerHTML = '';
+ 
+            try {
+                // Get selected values from dropdowns
+                const mathMarks = parseInt(document.getElementById('math_marks').value);
+                const englishMarks = parseInt(document.getElementById('english_marks').value);
+                const subject1Marks = parseInt(document.getElementById('subject_1_marks').value);
+                const subject2Marks = parseInt(document.getElementById('subject_2_marks').value);
+                const subject3Marks = parseInt(document.getElementById('subject_3_marks').value);
+                const subject4Marks = parseInt(document.getElementById('subject_4_marks').value);
+                const subject5Marks = parseInt(document.getElementById('subject_5_marks').value);
+
+                // Check if all inputs are selected
+                if (isNaN(mathMarks) || isNaN(englishMarks) || isNaN(subject1Marks) ||
+                    isNaN(subject2Marks) || isNaN(subject3Marks) ||
+                    isNaN(subject4Marks) || isNaN(subject5Marks)) {
+                    errorDiv.innerHTML = 'Please ensure all fields are selected.';
+                    return;
+                }
+
+                // APS calculation logic
+                function getApsPoints(marks) {
+                    if (marks >= 80) return 7;
+                    if (marks >= 70) return 6;
+                    if (marks >= 60) return 5;
+                    if (marks >= 50) return 4;
+                    if (marks >= 40) return 3;
+                    if (marks >= 30) return 2;
+                    return 1;
+                }
+
+                // Calculate total APS
+                const totalAPS = getApsPoints(mathMarks) + getApsPoints(englishMarks) +
+                                 getApsPoints(subject1Marks) + getApsPoints(subject2Marks) +
+                                 getApsPoints(subject3Marks) + getApsPoints(subject4Marks) +
+                                 getApsPoints(subject5Marks);
+
+                // Display the calculated APS
+                apsResultDiv.innerHTML = `<h3>Your APS Score: ${totalAPS}</h3>`;
+
+                // Display course recommendations based on APS score
+                let recommendations = '';
+                if (totalAPS >= 35) {
+                    recommendations = 'You qualify for most courses, including highly competitive ones.';
+                } else if (totalAPS >= 25) {
+                    recommendations = 'You qualify for many courses. Consider applying for courses with lower APS requirements.';
+                } else {
+                    recommendations = 'Consider bridging programs or foundation courses to improve your qualifications.';
+                }
+                apsResultDiv.innerHTML += `<p>${recommendations}</p>`;
+            } catch (error) {
+                errorDiv.innerHTML = 'Error calculating APS. Please ensure all fields are filled correctly.';
+            }
+        }
+    </script>
+</body>
+</html>

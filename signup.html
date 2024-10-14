@@ -1,0 +1,94 @@
+<!-- templates/signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Gauge - Sign Up</title>
+    <style>
+        body {
+            background-color: #e9bce3;
+            font-family: 'Courier New', monospace;
+        }
+        .signup-container {
+            margin: 100px auto;
+            width: 400px;
+            padding: 20px;
+            background-color: #ffcccc;
+            border: 3px solid #ff0066;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .signup-container h1 {
+            color: white;
+        }
+        .signup-container label {
+            display: block;
+            color: white;
+            margin: 10px 0 5px;
+        }
+        .signup-container input, .signup-container select {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .btn-signup {
+            background-color: #ffcccc;
+            color: white;
+            padding: 10px;
+            border: 1px solid white;
+            width: 100%;
+            cursor: pointer;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h1>University Gauge - Sign Up</h1>
+        <form method="POST" action="{% url 'signup' %}">
+            <p>Signup URL: {% url 'signup' %}</p>  <!-- This will print the resolved signup URL -->
+            {% csrf_token %}
+            
+            <label for="username">Username</label>
+            {{ form.username }}
+            
+            <label for="name">Name</label>
+            {{ form.name }}
+
+            <label for="surname">Surname</label>
+            {{ form.surname }}
+
+            <label for="email">Email Address</label>
+            {{ form.email }}
+
+            <label for="exam_authority">Exam Authority</label>
+            {{ form.exam_authority }}
+
+            <label for="id_number">ID Number</label>
+            {{ form.id_number }}
+            
+            <label for="gender">Gender</label>
+            {{ form.gender }}
+
+            <label for="password">Password</label>
+            {{ form.password }}
+            
+            <label for="confirm_password">Confirm Password</label>
+            {{ form.confirm_password }}
+            <img src="{% static 'show-password-icon.png' %}" id="toggle-password" class="show-password-icon" alt="Show password" width="30px">
+
+            <button type="submit" class="btn-signup">Sign Up</button>
+
+            {% if form.errors %}
+            <div class="error-message">
+                {{ form.errors }}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
