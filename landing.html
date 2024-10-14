@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Gauge - Welcome</title>
+    
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+    <!-- Custom CSS -->
+    <style>
+        /* Ensure the video covers the entire background */
+        .hero.is-fullheight {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Style for the background video */
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Send it behind the content */
+            opacity: 0.7; /* Optional, to add some transparency */
+        }
+        
+
+        /* Center the content and add some padding */
+        .hero-body {
+            text-align: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5); /* Optional: To enhance text visibility */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-body h1 {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .hero-body p {
+            font-size: 1.5rem;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Style for the Why Choose University Gauge section */
+        .why-choose-section {
+            padding: 50px;
+            background-color: #f7f7f7;
+        }
+
+        .why-choose-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .why-choose-box:hover {
+            transform: translateY(-10px);
+        }
+
+        .why-choose-box h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+
+        /* Testimonial section */
+        .testimonial {
+            padding: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .testimonial.active {
+            display: block;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: #f8f9fa;
+            padding: 50px;
+        }
+
+        .faq-question {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .faq-question.active {
+            background-color: #e9ecef;
+        }
+
+        /* Button animations */
+        .button {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #808080;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            color: #ffd1d1;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'generate_report' %}">Download General Course Report</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="#hero" class="navbar-item">University Gauge</a>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a href="#hero" class="navbar-item">Home</a>
+                    <a href="#about" class="navbar-item">About Us</a>
+                    <a href="#why-choose" class="navbar-item">Why Choose Us</a>
+                    <a href="#testimonials" class="navbar-item">Testimonials</a>
+                    <a href="#faq" class="navbar-item">FAQ</a>
+                    <a href="{% url 'login' %}" class="navbar-item">Login</a>
+                    <a href="{% url 'signup' %}" class="navbar-item">Sign Up</a>
+                    <a href="#contact" class="navbar-item">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Video Background -->
+    {%load static%}
+    <section class="hero is-fullheight" id="hero">
+        <!-- Video Background -->
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="{% static 'videos/uni.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <!-- Hero Body -->
+        <div class="hero-body">
+            <div>
+                <h1>Welcome to University Gauge</h1>
+                <p>Your Guide to a Successful Transition to University</p>
+                <a href="#why-choose" class="button is-primary">Discover More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose University Gauge Section -->
+    <section class="why-choose-section" id="why-choose">
+        <div class="container">
+            <h2 class="title has-text-centered">Why Choose University Gauge?</h2>
+            <div class="columns">
+                <div class="column is-4">
+                    <div class="why-choose-box">
+                        <h3>Find the Right University</h3>
+                        <p>Search and compare universities, view rankings, and find the best fit for your goals.</p>
+                    </div>
+                </div>
+                <div class="column is-4">
+                    <div class="why-choose-box">
+                        <h3>Calculate APS</h3>
+                        <p>Use our APS calculator to evaluate your eligibility for different universities.</p>
+                    </div>
+                </div>
+                <div class="column is-4">
+                    <div class="why-choose-box">
+                        <h3>Get University Tips</h3>
+                        <p>Receive expert guidance and tips for a smooth transition to university life.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <h2 class="title has-text-centered">Student Testimonials</h2>
+            <div class="testimonial active">
+                <p>"University Gauge helped me find the perfect university and transition smoothly!" - Jane Doe</p>
+            </div>
+            <div class="testimonial">
+                <p>"Thanks to University Gauge, I knew exactly what to expect when applying!" - John Smith</p>
+            </div>
+            <div class="testimonial">
+                <p>"The APS calculator and tips made everything so much easier!" - Maria Rodriguez</p>
+            </div>
+            <div class="buttons has-text-centered">
+                <button class="button" id="prev">Previous</button>
+                <button class="button" id="next">Next</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <h2 class="title has-text-centered">Frequently Asked Questions</h2>
+            <div class="faq-question">
+                What is University Gauge?
+            </div>
+            <div class="faq-answer">
+                University Gauge is a platform that helps you find and compare universities, calculate your APS, and get tips for a smooth transition.
+            </div>
+            <div class="faq-question">
+                How do I use the APS calculator?
+            </div>
+            <div class="faq-answer">
+                Simply input your high school grades, and our calculator will determine your eligibility for various universities.
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer has-background-dark has-text-white">
+        <div class="content has-text-centered">
+            <p>&copy; 2024 University Gauge. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Testimonials and FAQ Accordion -->
+    <script>
+        // Testimonial Carousel
+        const testimonials = document.querySelectorAll('.testimonial');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        let currentIndex = 0;
+
+        function showTestimonial(index) {
+            testimonials.forEach((item, i) => {
+                item.classList.remove('active');
+                if (i === index) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : testimonials.length - 1;
+            showTestimonial(currentIndex);
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex < testimonials.length - 1) ? currentIndex + 1 : 0;
+            showTestimonial(currentIndex);
+        });
+
+        // FAQ Accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                question.classList.toggle('active');
+                const answer = question.nextElementSibling;
+                if (answer.style.display === "block") {
+                    answer.style.display = "none";
+                } else {
+                    answer.style.display = "block";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
